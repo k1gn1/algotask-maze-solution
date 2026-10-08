@@ -15,6 +15,9 @@ public class Minotaur {
     private Set<Coordinates> visited;
     private Map<Coordinates, Character> info;
 
+    private int lastInfoSize;
+    private boolean fireGaveNew;
+
     public Minotaur(int x, int y, int x_1, int y_1, int A, int B, int C, int K) {
         currentPosition = new Coordinates(x, y);
         currentDirection = new Coordinates(x_1 - x, y_1 - y);
@@ -34,8 +37,36 @@ public class Minotaur {
         return currentPosition;
     }
 
+    public Coordinates getDirection() {
+        return currentDirection;
+    }
+
     public long getTimeTotal() {
         return timeTotal;
+    }
+
+    public int getLookDistance() {
+        return lookDistance;
+    }
+
+    public int getMoveTime() {
+        return moveTime;
+    }
+
+    public int getRotateTime() {
+        return rotateTime;
+    }
+
+    public int getMakeFireTime() {
+        return makeFireTime;
+    }
+
+    public Map<Coordinates, Character> getKnown() {
+        return info;
+    }
+
+    public Set<Coordinates> getVisited() {
+        return visited;
     }
 
     public boolean isVisited(Coordinates coordinates) {
@@ -43,12 +74,12 @@ public class Minotaur {
     }
 
     public boolean isConfident() {
-        for (var coordinates : info.keySet()) {
+        for (Coordinates coordinates : info.keySet()) {
             if (info.get(coordinates) == '_' && !isVisited(coordinates)) {
                 return false;
             }
         }
-        return true;
+        return !fireGaveNew;
     }
 
     public void makeMove(boolean success) {
@@ -84,6 +115,9 @@ public class Minotaur {
                         visible[y].charAt(x));
             }
         }
+
+        fireGaveNew = info.size() > lastInfoSize;
+        lastInfoSize = info.size();
         timeTotal += makeFireTime;
     }
 }
