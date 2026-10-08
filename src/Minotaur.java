@@ -31,6 +31,8 @@ public class Minotaur {
         info = new HashMap<>();
         visited.add(currentPosition);
         info.put(currentPosition, '_');
+        lastInfoSize = 0;
+        fireGaveNew = true;
     }
 
     public Coordinates getPosition() {

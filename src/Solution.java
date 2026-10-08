@@ -42,7 +42,8 @@ public class Solution {
         while (!queue.isEmpty()) {
             Coordinates current = queue.poll();
 
-            if (!current.equals(startPosition) && info.get(current) == '_' && !visited.contains(current)) {
+            if (!current.equals(startPosition) && info.getOrDefault(current, '#') == '_'
+                    && !visited.contains(current)) {
                 List<Coordinates> path = new ArrayList<>();
                 while (current != null) {
                     path.add(current);
@@ -55,7 +56,7 @@ public class Solution {
 
             for (int i = 0; i < 4; i++) {
                 Coordinates newCoordinates = new Coordinates(current.x() + dx[i], current.y() + dy[i]);
-                if (info.get(newCoordinates) == '_' && !visitedBFS.contains(newCoordinates)) {
+                if (info.getOrDefault(newCoordinates, '#') == '_' && !visitedBFS.contains(newCoordinates)) {
                     parent.put(newCoordinates, current);
                     queue.offer(newCoordinates);
                     visitedBFS.add(newCoordinates);
